@@ -8,20 +8,12 @@ parameters:
     description: Name of image osm
     default: osm
 
-  ram_osm:
-    type: string
-    description: Ram for flavor osm
-    default: 8192
 
-  vcpu_osm:
-    type: string
-    description: VCPU for flavor osm
-    default: 4
 
-  disk_osm:
+  flavor_osm:
     type: string
-    description: Disk for flavor osm
-    default: 40
+    description: Flavor for osm
+    default: osm
 
   public_key_osm:
     type: string
@@ -46,17 +38,6 @@ parameters:
 resources:
 #OSM:
 
-  flavor_osm:
-    type: OS::Nova::Flavor
-    properties:
-      disk: { get_param: disk_osm }
-      ephemeral: 0
-      flavorid: osm1
-      is_public: False
-      name: osm
-      ram: { get_param: ram_osm }
-      swap: 0
-      vcpus: { get_param: vcpu_osm }
 
   key_osm:
     type: OS::Nova::KeyPair
@@ -69,7 +50,7 @@ resources:
     properties:
       name: OSM
       image: { get_param: image_osm }
-      flavor: { get_resource: flavor_osm }
+      flavor: { get_param: flavor_osm }
       key_name: { get_resource: key_osm }
       networks:
         - port: { get_resource: OSM_mgmt_port }
