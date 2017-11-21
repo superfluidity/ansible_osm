@@ -22,5 +22,3 @@
  - name: Config openstack edge application 1
    command: lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach {{ app1_edge_os_name }} --user={{ app1_edge_os_username }} --password={{ app1_edge_os_password  }} --vim-tenant-name={{ app1_edge_os_project_name }}'
 
-
-

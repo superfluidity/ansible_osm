@@ -6,4 +6,5 @@
       - group_vars/all
 
   roles:
+    - create_osm
     - config
