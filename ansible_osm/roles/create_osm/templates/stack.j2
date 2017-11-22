@@ -25,16 +25,54 @@ parameters:
 
   osm_floating_ip:
     type: string
-    description: Foating IP address for external access to osm
-    default: 10.255.73.105
+    description: Foating IP address for external access to osm (10.255.73.105)
+    default: aa30a11f-ac53-49fe-884d-961600803e29
 
-  net_mgmt_name:
+  net_osm_prefix:
     type: string
     description: Management network address
-    default: admin_net
+    default: 192.168.252.0/24
+
+  router_osm_ip:
+    type: string
+    description: IP address to connect router to osm network
+    default: 192.168.252.1
+
 
 resources:
 #OSM:
+
+  router_osm:
+    type: OS::Neutron::Router
+    properties:
+      name: router_osm
+      external_gateway_info: { network:  { get_param: public_net }}
+
+  net_osm:
+    type: OS::Neutron::Net
+    properties:
+      name: net_osm
+
+  subnet_osm:
+    type: OS::Neutron::Subnet
+    properties:
+      name: subnet_osm
+      network: { get_resource: net_osm }
+      cidr: { get_param: net_osm_prefix }
+
+  router_osm_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: net_osm }
+      fixed_ips:
+        - ip_address: { get_param: router_osm_ip }
+
+  interf-apps-router:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router: { get_resource: router_osm }
+      port: { get_resource: router_osm_port }
+
 
   key_osm:
     type: OS::Nova::KeyPair
@@ -55,11 +93,11 @@ resources:
   OSM_mgmt_port:
     type: OS::Neutron::Port
     properties:
-      network: { get_param: net_mgmt_name }
+      network: { get_resource: net_osm }
 
   OSM_mgmt_floating_ip:
-    type: OS::Neutron::FloatingIP
+    type: OS::Neutron::FloatingIPAssociation
     properties:
-      floating_network: { get_param: public_net }
+      floatingip_id: { get_param: osm_floating_ip }
       port_id: { get_resource: OSM_mgmt_port }
-      floating_ip_address: { get_param: osm_floating_ip }
+    depends_on: interf-apps-router
