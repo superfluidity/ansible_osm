@@ -4,7 +4,7 @@
     src: stack.j2
     dest: "{{ template_path }}"
 
-    - name: Copy config template
+- name: Copy config template
   template:
     src: config.j2
     dest: "{{ config_path }}"
