@@ -1,2 +1,3 @@
 ---
 template_path: "/tmp/osm_template.yaml"
+config_path: "/tmp/osm_config.yaml"

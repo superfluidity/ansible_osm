@@ -89,6 +89,8 @@ resources:
       key_name: { get_resource: key_osm }
       networks:
         - port: { get_resource: OSM_mgmt_port }
+      user_data: { get_file: /tmp/osm_config.yaml}
+      user_data_format: RAW
 
   OSM_mgmt_port:
     type: OS::Neutron::Port
