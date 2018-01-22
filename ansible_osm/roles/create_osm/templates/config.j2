@@ -7,11 +7,11 @@ while [ -z "$test" ] ; do
 done
 
 
-lxc exec RO -- sh -c 'openmano datacenter-create admin-core http://10.255.73.6:5000/v2.0 --type openstack --description "Admin Core site"'
-lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach admin-core --user=admin --password=35b39536cccc42b0 --vim-tenant-name=admin'
-lxc exec RO -- sh -c 'openmano datacenter-create admin-edge http://192.168.50.20:5000/v2.0 --type openstack --description "Admin Edge site"'
-lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach admin-edge --user=admin --password=superfluidity --vim-tenant-name=admin'
-lxc exec RO -- sh -c 'openmano datacenter-create app1-edge http://192.168.50.20:5000/v2.0 --type openstack --description "App1 Edge site"'
-lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach app1-edge --user=admin --password=superfluidity --vim-tenant-name=MEC-app1'
+lxc exec RO -- sh -c 'openmano datacenter-create admin-edge http://192.168.50.20/identity --type openstack --description "Admin Edge site"'
+lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach admin-edge --user=admin --password=superf. --vim-tenant-name=admin'
+lxc exec RO -- sh -c 'openmano datacenter-create app1-edge http://192.168.50.20/identity --type openstack --description "App1 Edge site"'
+lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach app1-edge --user=admin --password=superf. --vim-tenant-name=MEC-app1'
+lxc exec RO -- sh -c 'openmano datacenter-create app2-edge http://192.168.50.20/identity --type openstack --description "App2 Edge site"'
+lxc exec RO -- sh -c 'export OPENMANO_TENANT=osm && openmano datacenter-attach app2-edge --user=admin --password=superf. --vim-tenant-name=MEC-app2'
 
 exit 0
