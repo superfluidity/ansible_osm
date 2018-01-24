@@ -23,6 +23,11 @@ parameters:
     description: External network public name
     default: ext
 
+  public_dns:
+    type: string
+    description: DNS public name
+    default: 8.8.8.8
+
   osm_floating_ip:
     type: string
     description: Foating IP address for external access to osm (10.255.73.105)
@@ -59,6 +64,7 @@ resources:
       name: subnet_osm
       network: { get_resource: net_osm }
       cidr: { get_param: net_osm_prefix }
+      dns_nameservers: [ { get_param: public_dns } ]
 
   router_osm_port:
     type: OS::Neutron::Port
